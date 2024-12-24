@@ -1,0 +1,122 @@
+/* Add CSS styles below. */
+.example-class {
+  /* You can even apply Tailwind classes here. */
+  @apply bg-red-500 text-white;
+}
+
+/* Override some of the Tailwind .prose CSS */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply m-0 mb-2;
+  text-wrap: balance;
+}
+
+.balanced {
+  max-inline-size: 50ch;
+  text-wrap: balance;
+}
+
+/* Daisy UI Overrides */
+.breadcrumbs > ul > li,
+.breadcrumbs > ol > li {
+  @apply p-0;
+}
+
+.text-muted {
+  @apply text-gray-500;
+}
+
+.container {
+  max-width: 768px !important;
+}
+
+/* Alpine.js */
+[x-cloak] {
+  display: none;
+}
+
+.btn.btn-outline {
+  @apply border-2 border-slate-200 hover:border-slate-200 hover:bg-inherit hover:text-inherit;
+}
+
+.btn.btn-primary {
+  @apply text-white;
+}
+
+.btn.btn-primary:disabled {
+  @apply bg-slate-200 text-slate-400 cursor-not-allowed shadow-none;
+}
+
+/* Trix Editor */
+#trix-editor trix-toolbar {
+  .trix-button-group {
+    button.trix-button,
+    input[type="button"].trix-button {
+      &.trix-active {
+        @apply bg-slate-200;
+      }
+
+      &:hover {
+        @apply bg-slate-200;
+      }
+
+      @apply !border-0 rounded-lg;
+    }
+
+    @apply border-0 rounded-lg mb-0;
+  }
+
+  [data-trix-button-group="file-tools"] {
+    @apply !hidden;
+  }
+
+  [data-trix-attribute="quote"] {
+    @apply !border-l-0;
+  }
+
+  [data-trix-dialog][data-trix-active] {
+    .trix-input {
+      @apply border-2 border-slate-200 rounded-lg;
+    }
+
+    @apply !border-0 rounded-xl p-6;
+  }
+
+  @apply mb-6 sticky top-2 left-0 right-0 z-50 border-0 bg-slate-100 px-3 py-2 rounded-full;
+}
+
+trix-editor,
+.rendered-markdown {
+  h1 {
+    @apply text-2xl font-extrabold;
+  }
+
+  :first-child {
+    @apply mt-0;
+  }
+
+  :last-child {
+    @apply mb-0;
+  }
+
+  @apply p-0 m-0 border-0 text-xl leading-relaxed;
+}
+
+#trix-editor trix-editor {
+  a {
+    @apply font-medium underline;
+  }
+
+  @apply p-6 border-2 border-slate-200 rounded-lg;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+textarea {
+  @apply !border-2 !border-slate-200 bg-white;
+}

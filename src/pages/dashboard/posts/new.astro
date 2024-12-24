@@ -1,0 +1,128 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { actions } from "astro:actions";
+import TrixEditor from "@/components/TrixEditor.astro";
+
+if (!Astro.locals.session) {
+  return Astro.redirect("/");
+}
+
+const user = Astro.locals.user;
+const result = Astro.getActionResult(actions.posts.create);
+
+// Redirect on successful post creation
+if (result?.data?.success) {
+  return Astro.redirect("/posts");
+}
+---
+
+<Layout title="Create Post">
+  <div class="p-6 container mx-auto">
+    <div class="mx-auto">
+      <div class="breadcrumbs text-sm m-0">
+        <ul class="!p-0 !m-0">
+          <li><a href="/">Home</a></li>
+          <li><a href="/dashboard">Dashboard</a></li>
+          <li>Create Post</li>
+        </ul>
+      </div>
+
+      <h1>Create Post</h1>
+
+      <form
+        class="p-6 rounded-xl bg-white border-2 border-slate-200 mt-6 flex flex-col gap-6"
+        method="POST"
+        action={actions.posts.create}
+      >
+        <TrixEditor content={""} />
+        <div class="h-0.5 my-2 w-full bg-slate-200"></div>
+        <div class="flex flex-col gap-4">
+          <div class="grid grid-cols-2 gap-6">
+            <div class="grid gap-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="title">Title</label
+              >
+              <input
+                type="text"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="title"
+                name="title"
+                required
+                placeholder="Enter the post title"
+              />
+            </div>
+            <div class="grid gap-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="pubDate">Publication Date</label
+              >
+              <input
+                type="text"
+                readonly
+                x-data="{ today: new Date().toISOString().split('T')[0] }"
+                x-bind:value="today"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="pubDate"
+                name="pubDate"
+                placeholder="Select the publication date"
+                type="date"
+              />
+            </div>
+          </div>
+          <div class="grid gap-2">
+            <label
+              class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              for="description">Description</label
+            >
+            <textarea
+              class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              id="description"
+              name="description"
+              required
+              placeholder="Enter a brief description of the post"
+              rows="3"></textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="grid gap-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="author">Author</label
+              >
+              <input
+                type="text"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="author"
+                name="author"
+                value={user?.email || ""}
+                placeholder="Enter the author's name"
+                readonly
+              />
+            </div>
+            <div class="grid gap-2">
+              <label
+                class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                for="slug">Slug</label
+              >
+              <input
+                type="text"
+                class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                id="slug"
+                name="slug"
+                required
+                placeholder="blog-post-slug"
+                pattern="[a-z0-9\\-]+"
+                x-data="{ slug: '' }"
+                x-on:input="slug = $event.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/^-+|-+$/g, '').replace(/-{2,}/g, '-')"
+                x-bind:value="slug"
+              />
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button class="btn btn-primary btn-md" type="submit">Save Post</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</Layout>
