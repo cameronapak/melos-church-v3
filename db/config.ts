@@ -1,5 +1,42 @@
 import { defineDb, defineTable, column } from "astro:db";
 
+const Church = defineTable({
+  columns: {
+    id: column.number({ primaryKey: true }),
+    name: column.text({
+      label: "Church Name",
+    }),
+    announcement: column.text({
+      label: "Announcement",
+      optional: true,
+      multiline: true,
+    }),
+    address: column.text({
+      label: "Address",
+      multiline: true,
+    }),
+    phone: column.text({
+      label: "Phone Number",
+    }),
+    email: column.text({
+      label: "Email",
+    }),
+    website: column.text({
+      label: "Website",
+      optional: true,
+    }),
+    mission: column.text({
+      label: "Mission Statement",
+      multiline: true,
+    }),
+    links: column.json({
+      label: "Links",
+    }),
+    createdAt: column.date(),
+    updatedAt: column.date()
+  }
+});
+
 const Posts = defineTable({
   columns: {
     id: column.number({ primaryKey: true }),
@@ -68,6 +105,7 @@ const Verification = defineTable({
 
 export default defineDb({
   tables: {
+    Church,
     Posts,
     User,
     Session,
