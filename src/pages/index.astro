@@ -120,8 +120,8 @@ Astro.response.headers.set("netlify-cache-tag", "components");
 ---
 
 <Layout
-  title="Freedom Stack Boilerplate"
-  description="A free full-stack boilerplate that feels freeing. Astro, HTMX, Alpine.js, Astro DB, Better Auth, Preline UI, & daisyUI."
+  title="Get a Digital Church Bulletin with Melos"
+  description="Melos keeps your church informed and connected. Your digital church bulletin is just a link away."
 >
   <Navbar
     title="Melos.Church"
@@ -155,6 +155,9 @@ Astro.response.headers.set("netlify-cache-tag", "components");
   <!-- <FAQ title="FAQ" items={faqItems} /> -->
 
   <Footer
+    copyright={`© ${new Date().getFullYear()} Faith Tools Software Solutions, LLC`}
+    title="Melos.Church"
+    description="Melos keeps your church informed and connected."
     links={[
       {
         title: "Resources",
